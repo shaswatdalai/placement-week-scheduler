@@ -3,7 +3,7 @@ import mongoose, { Document, Schema } from "mongoose";
 export interface IPanel extends Document {
   panelId: string;
   companyId: string;
-  status: "AVAILABLE" | "DISRUPTED";
+  status: "available" | "disrupted" | "inactive";
 }
 
 const panelSchema = new Schema<IPanel>(
@@ -23,8 +23,8 @@ const panelSchema = new Schema<IPanel>(
 
     status: {
       type: String,
-      enum: ["AVAILABLE", "DISRUPTED"],
-      default: "AVAILABLE"
+      enum: ["available", "disrupted", "inactive"],
+      default: "available"
     }
   },
   {

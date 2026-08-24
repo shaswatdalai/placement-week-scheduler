@@ -45,7 +45,7 @@ const companySchema = new Schema<ICompany>(
     priority: {
       type: Number,
       required: true,
-      min: 1
+      min: 1//1 being highest and 3 being the lowest priority
     }
   },
   {
