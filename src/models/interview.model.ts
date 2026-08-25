@@ -31,6 +31,11 @@ const interviewSchema = new Schema<IInterview>(
       required: true,
       trim: true
     },
+    roomId: {
+      type: String,
+      required: true,
+      trim: true
+    },
 
     panelId: {
       type: String,

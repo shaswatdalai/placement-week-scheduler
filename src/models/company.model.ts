@@ -39,7 +39,7 @@ const companySchema = new Schema<ICompany>(
     interviewDuration: {
       type: Number,
       required: true,
-      min: 1
+      min: 1//interview duration cannot be 0 or negative 
     },
 
     priority: {

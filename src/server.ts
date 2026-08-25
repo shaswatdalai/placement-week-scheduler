@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db";
 import interviewRoutes from "./routes/interview.routes";
 import roomRoutes from "./routes/room.routes";
+import timeSlotRoutes from "./routes/timeslot.routes";
 
 
 dotenv.config();
@@ -20,7 +21,7 @@ app.use("/api/companies", companyRoutes);
 app.use("/api/panels", panelRoutes);
 app.use("/api/interviews", interviewRoutes);
 app.use("/api/rooms", roomRoutes);
-
+app.use("/api/timeslots", timeSlotRoutes);
 app.get("/", (_req, res) => {
   res.json({
     message: "Placement Week Scheduler API is running"
