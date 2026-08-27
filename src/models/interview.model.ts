@@ -6,9 +6,10 @@ export interface IInterview extends Document {
   companyId: string;
   roomId: string;
   panelId: string;
+  duration: number;
   startTime: Date;
   endTime: Date;
-  status: "scheduled" | "completed" | "cancelled";
+  status: "pending" | "scheduled" | "completed" | "cancelled";
 }
 
 const interviewSchema = new Schema<IInterview>(
@@ -43,6 +44,12 @@ const interviewSchema = new Schema<IInterview>(
       trim: true
     },
 
+    duration: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+
     startTime: {
       type: Date,
       required: true
@@ -55,8 +62,8 @@ const interviewSchema = new Schema<IInterview>(
 
     status: {
       type: String,
-      enum: ["scheduled", "completed", "cancelled"],
-      default: "scheduled"
+      enum: ["pending", "scheduled", "completed", "cancelled"],
+      default: "pending"
     }
   },
   {
