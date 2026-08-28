@@ -7,3 +7,6 @@ export const createCompany = async (
 
   return company;
 };
+export const getCompanies = async (): Promise<ICompany[]> => {
+    return await Company.find();
+};

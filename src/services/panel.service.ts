@@ -16,3 +16,6 @@ export const createPanel = async (
 
   return panel;
 };
+export const getPanels = async (): Promise<IPanel[]> => {
+    return await Panel.find();
+};

@@ -7,3 +7,7 @@ export const createStudent = async (
 
   return student;
 };
+
+export const getStudents = async (): Promise<IStudent[]> => {
+    return await Student.find();
+};

@@ -7,3 +7,6 @@ export const createTimeSlot = async (
 
   return timeSlot;
 };
+export const getTimeSlots = async (): Promise<ITimeSlot[]> => {
+    return await TimeSlot.find();
+};

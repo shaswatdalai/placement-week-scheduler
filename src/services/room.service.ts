@@ -7,3 +7,6 @@ export const createRoom = async (
 
   return room;
 };
+export const getRooms = async (): Promise<IRoom[]> => {
+    return await Room.find();
+};

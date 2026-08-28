@@ -34,13 +34,13 @@ const interviewSchema = new Schema<IInterview>(
     },
     roomId: {
       type: String,
-      required: true,
+      
       trim: true
     },
 
     panelId: {
       type: String,
-      required: true,
+      
       trim: true
     },
 
@@ -52,12 +52,12 @@ const interviewSchema = new Schema<IInterview>(
 
     startTime: {
       type: Date,
-      required: true
+    
     },
 
     endTime: {
       type: Date,
-      required: true
+      
     },
 
     status: {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createInterview } from "../services/interview.service";
+import { createInterview,getInterviews } from "../services/interview.service";
 
 export const createInterviewController = async (
   req: Request,
@@ -23,4 +23,24 @@ export const createInterviewController = async (
           : "Failed to create interview"
     });
   }
+};
+export const getInterviewsController = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const interviews = await getInterviews();
+
+        res.status(200).json({
+            success: true,
+            data: interviews
+        });
+    } catch (error) {
+        console.error("Error fetching interviews:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch interviews"
+        });
+    }
 };

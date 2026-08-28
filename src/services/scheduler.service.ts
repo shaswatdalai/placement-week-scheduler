@@ -269,9 +269,9 @@ const generateSchedule = (
         // Try each possible time window
         for (const timeWindow of possibleTimeWindows) {
 
-            
+
             // 1. Check student
-            
+
 
             const studentConflict =
                 hasStudentConflict(
@@ -286,9 +286,9 @@ const generateSchedule = (
             }
 
 
-            
+
             // 2. Find suitable panel
-            
+
 
             const panel =
                 findAvailablePanelForTime(
@@ -296,7 +296,8 @@ const generateSchedule = (
                     interviews,
                     interview.companyId,
                     timeWindow.startTime,
-                    timeWindow.endTime
+                    timeWindow.endTime,
+                    
                 );
 
             if (!panel) {
@@ -304,9 +305,9 @@ const generateSchedule = (
             }
 
 
-            
+
             // 3. Find suitable room
-            
+
 
             const room =
                 findAvailableRoomForTime(
@@ -321,9 +322,9 @@ const generateSchedule = (
             }
 
 
-            
+
             // 4. Everything works
-            
+
 
             assignInterview(
                 interview,
@@ -333,9 +334,9 @@ const generateSchedule = (
             );
 
 
-            
+
             // 5. This interview is successfully scheduled
-            
+
 
             break;
         }
