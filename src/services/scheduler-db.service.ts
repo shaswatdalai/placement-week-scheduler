@@ -3,44 +3,35 @@ import TimeSlot from "../models/timeslot.model";
 import Panel from "../models/panel.model";
 import Room from "../models/room.model";
 import Company from "../models/company.model";
+import Student from "../models/student.model";
 
 import generateSchedule from "./scheduler.service";
 
 
+// Loads data from DB, runs the scheduler, persists only the changed interviews.
 const scheduleInterviews = async () => {
 
-    // Get all required data from MongoDB
     const interviews = await Interview.find();
-    const timeSlots = await TimeSlot.find();
-    const panels = await Panel.find();
-    const rooms = await Room.find();
-    const companies = await Company.find();
+    const timeSlots  = await TimeSlot.find();
+    const panels     = await Panel.find();
+    const rooms      = await Room.find();
+    const companies  = await Company.find();
+    const students   = await Student.find();
 
-
-    // Keep track of interviews that were pending
     const pendingInterviews = interviews.filter(
         (interview) => interview.status === "pending"
     );
 
+    generateSchedule(interviews, timeSlots, panels, rooms, companies, students);
 
-    // Run the actual scheduling logic
-    generateSchedule(
-        interviews,
-        timeSlots,
-        panels,
-        rooms,
-        companies
-    );
-
-
-    // Save only the interviews that were successfully scheduled
     for (const interview of pendingInterviews) {
-
-        if (interview.status === "scheduled") {
+        if (
+            interview.status === "scheduled" ||
+            interview.status === "unscheduled"
+        ) {
             await interview.save();
         }
     }
-
 
     return pendingInterviews;
 };

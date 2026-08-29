@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "8f3b4c12-9876-4abc-def0-123456789abc",
+		"name": "Placement Week Scheduler API",
+		"description": "Postman collection for Placement Week Scheduler — Core Scheduler, Disruptions, Metrics, Diff & Explanations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Core Scheduler",
+			"item": [
+				{
+					"name": "Generate Initial Schedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/scheduler/generate",
+							"host": ["{{base_url}}"],
+							"path": ["api", "scheduler", "generate"]
+						},
+						"description": "Runs the priority-based scheduler on all pending shortlists."
+					}
+				},
+				{
+					"name": "Get All Schedule",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/schedule",
+							"host": ["{{base_url}}"],
+							"path": ["api", "schedule"]
+						},
+						"description": "Fetch all scheduled/unscheduled interviews."
+					}
+				},
+				{
+					"name": "Get Filtered Schedule (Scheduled only)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/schedule?status=scheduled",
+							"host": ["{{base_url}}"],
+							"path": ["api", "schedule"],
+							"query": [
+								{ "key": "status", "value": "scheduled" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Schedule Metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/metrics",
+							"host": ["{{base_url}}"],
+							"path": ["api", "metrics"]
+						},
+						"description": "Quality metrics: percentage scheduled, room utilization, panel utilization, avg wait time."
+					}
+				},
+				{
+					"name": "Explain Decision for Interview",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/schedule/explanations/INT-001",
+							"host": ["{{base_url}}"],
+							"path": ["api", "schedule", "explanations", "INT-001"]
+						},
+						"description": "Returns deterministic reasonTrace and summary for a single interview."
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Disruptions & Replanning",
+			"item": [
+				{
+					"name": "Disruption A: Company Delay",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"companyId\": \"COMP-01\",\n  \"delayHours\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/disruptions/company-delay",
+							"host": ["{{base_url}}"],
+							"path": ["api", "disruptions", "company-delay"]
+						}
+					}
+				},
+				{
+					"name": "Disruption B: Panel Unavailable",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"panelId\": \"PANEL-01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/disruptions/panel-unavailable",
+							"host": ["{{base_url}}"],
+							"path": ["api", "disruptions", "panel-unavailable"]
+						}
+					}
+				},
+				{
+					"name": "Disruption C: Student Withdrawal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": \"STU-001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/disruptions/student-withdrawal",
+							"host": ["{{base_url}}"],
+							"path": ["api", "disruptions", "student-withdrawal"]
+						}
+					}
+				},
+				{
+					"name": "Disruption D: Room Unavailable",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roomId\": \"ROOM-001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/disruptions/room-unavailable",
+							"host": ["{{base_url}}"],
+							"path": ["api", "disruptions", "room-unavailable"]
+						}
+					}
+				},
+				{
+					"name": "Disruption E: Compound Disruption",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentWithdrawal\": { \"studentId\": \"STU-002\" },\n  \"companyDelay\": { \"companyId\": \"COMP-02\", \"delayHours\": 1 },\n  \"panelUnavailable\": { \"panelId\": \"PANEL-02\" },\n  \"roomUnavailable\": { \"roomId\": \"ROOM-002\" }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/disruptions/compound",
+							"host": ["{{base_url}}"],
+							"path": ["api", "disruptions", "compound"]
+						}
+					}
+				},
+				{
+					"name": "Get Latest Disruption Diff",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/schedule/diff",
+							"host": ["{{base_url}}"],
+							"path": ["api", "schedule", "diff"]
+						}
+					}
+				},
+				{
+					"name": "Get All Historical Diffs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/schedule/diff?all=true",
+							"host": ["{{base_url}}"],
+							"path": ["api", "schedule", "diff"],
+							"query": [
+								{ "key": "all", "value": "true" }
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Entity CRUD APIs",
+			"item": [
+				{
+					"name": "Get Students",
+					"request": {
+						"method": "GET",
+						"url": "{{base_url}}/api/students"
+					}
+				},
+				{
+					"name": "Get Companies",
+					"request": {
+						"method": "GET",
+						"url": "{{base_url}}/api/companies"
+					}
+				},
+				{
+					"name": "Get Rooms",
+					"request": {
+						"method": "GET",
+						"url": "{{base_url}}/api/rooms"
+					}
+				},
+				{
+					"name": "Get Panels",
+					"request": {
+						"method": "GET",
+						"url": "{{base_url}}/api/panels"
+					}
+				},
+				{
+					"name": "Get TimeSlots",
+					"request": {
+						"method": "GET",
+						"url": "{{base_url}}/api/timeslots"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000"
+		}
+	]
+}

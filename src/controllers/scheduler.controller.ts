@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import scheduleInterviews from "../services/scheduler-db.service";
+import { broadcast } from "../services/websocket.service";
 
 
 const generateScheduleController = async (
@@ -12,6 +13,11 @@ const generateScheduleController = async (
 
         const scheduledInterviews =
             await scheduleInterviews();
+
+        broadcast("SCHEDULE_UPDATED", {
+            type: "generate",
+            interviewsCount: scheduledInterviews.length
+        });
 
         return res.status(200).json({
             message: "Schedule generated successfully",

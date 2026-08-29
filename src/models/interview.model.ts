@@ -4,14 +4,30 @@ export interface IInterview extends Document {
   interviewId: string;
   studentId: string;
   companyId: string;
-  roomId: string;
-  panelId: string;
+  roomId?: string;
+  panelId?: string;
   duration: number;
-  startTime: Date;
-  endTime: Date;
-  status: "pending" | "scheduled" | "completed" | "cancelled";
-}
+  startTime?: Date;
+  endTime?: Date;
 
+  status:
+  | "pending"
+  | "scheduled"
+  | "completed"
+  | "cancelled"
+  | "unscheduled";
+
+  failureReason?: string;
+  failureDetails?: string;
+  reasonTrace?: string[];
+  snapshotBefore?: {
+    startTime?: Date;
+    endTime?: Date;
+    roomId?: string;
+    panelId?: string;
+    status?: string;
+  };
+}
 const interviewSchema = new Schema<IInterview>(
   {
     interviewId: {
@@ -34,13 +50,13 @@ const interviewSchema = new Schema<IInterview>(
     },
     roomId: {
       type: String,
-      
+
       trim: true
     },
 
     panelId: {
       type: String,
-      
+
       trim: true
     },
 
@@ -52,18 +68,37 @@ const interviewSchema = new Schema<IInterview>(
 
     startTime: {
       type: Date,
-    
+
     },
 
     endTime: {
       type: Date,
-      
+
     },
 
     status: {
       type: String,
-      enum: ["pending", "scheduled", "completed", "cancelled"],
+      enum: ["pending", "scheduled", "completed", "cancelled", "unscheduled"],
       default: "pending"
+    },
+    failureReason: {
+      type: String,
+      trim: true
+    },
+    failureDetails: {
+      type: String,
+      trim: true
+    },
+    reasonTrace: {
+      type: [String],
+      default: []
+    },
+    snapshotBefore: {
+      startTime: { type: Date },
+      endTime: { type: Date },
+      roomId: { type: String },
+      panelId: { type: String },
+      status: { type: String }
     }
   },
   {
