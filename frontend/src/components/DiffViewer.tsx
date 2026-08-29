@@ -99,7 +99,8 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
           return (
             <div
               key={entry.interviewId}
-              className={`bg-white border rounded-lg shadow-sm p-4 text-xs transition-all duration-200 flex flex-col md:flex-row justify-between gap-4 items-start md:items-center hover:shadow-md ${
+              onClick={() => onSelectInterview(entry.interviewId)}
+              className={`bg-white border rounded-lg shadow-sm p-4 text-xs transition-all duration-200 flex flex-col md:flex-row justify-between gap-4 items-start md:items-center hover:shadow-md cursor-pointer hover:border-stone-400 ${
                 isCancelled
                   ? "border-red-250 bg-red-50/5"
                   : isUnscheduled

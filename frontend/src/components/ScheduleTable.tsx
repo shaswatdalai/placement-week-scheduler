@@ -165,7 +165,8 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
               filteredInterviews.map((item) => (
                 <tr
                   key={item.interviewId}
-                  className="hover:bg-stone-50/50 transition-colors group"
+                  onClick={() => onSelectInterview(item.interviewId)}
+                  className="hover:bg-stone-100/70 cursor-pointer transition-colors group"
                 >
                   <td className="whitespace-nowrap px-6 py-4 font-mono font-medium text-stone-700">
                     {item.interviewId}
@@ -225,7 +226,10 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-right">
                     <button
-                      onClick={() => onSelectInterview(item.interviewId)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelectInterview(item.interviewId);
+                      }}
                       className="inline-flex items-center space-x-1 bg-stone-100 hover:bg-stone-200/80 text-stone-700 border border-stone-200 rounded px-2.5 py-1 text-[11px] font-medium transition-all group-hover:border-stone-300"
                     >
                       <Eye className="h-3 w-3" />
