@@ -2,7 +2,7 @@ import { ITimeSlot } from "../models/timeslot.model";
 import { IPanel } from "../models/panel.model";
 import { IRoom } from "../models/room.model";
 import { IInterview } from "../models/interview.model";
-
+import { ICompany } from "../models/company.model";
 
 
 // 1. GENERIC INTERVIEW CONFLICT
@@ -247,14 +247,29 @@ const generateSchedule = (
     interviews: IInterview[],
     timeSlots: ITimeSlot[],
     panels: IPanel[],
-    rooms: IRoom[]
+    rooms: IRoom[],
+    companies: ICompany[]
 ): IInterview[] => {
 
     // Get only interviews which still need scheduling
-    const pendingInterviews = interviews.filter(
-        (interview) => interview.status === "pending"
-    );
+    const pendingInterviews = interviews
+        .filter(
+            (interview) => interview.status === "pending"
+        )
+        .sort((a, b) => {
+            const companyA = companies.find(
+                (company) => company.companyId === a.companyId
+            );
 
+            const companyB = companies.find(
+                (company) => company.companyId === b.companyId
+            );
+
+            return (
+                (companyA?.priority ?? 999) -
+                (companyB?.priority ?? 999)
+            );
+        });
     // Process one interview at a time
     for (const interview of pendingInterviews) {
 
@@ -297,7 +312,7 @@ const generateSchedule = (
                     interview.companyId,
                     timeWindow.startTime,
                     timeWindow.endTime,
-                    
+
                 );
 
             if (!panel) {

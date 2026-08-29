@@ -2,6 +2,7 @@ import Interview from "../models/interview.model";
 import TimeSlot from "../models/timeslot.model";
 import Panel from "../models/panel.model";
 import Room from "../models/room.model";
+import Company from "../models/company.model";
 
 import generateSchedule from "./scheduler.service";
 
@@ -13,6 +14,7 @@ const scheduleInterviews = async () => {
     const timeSlots = await TimeSlot.find();
     const panels = await Panel.find();
     const rooms = await Room.find();
+    const companies = await Company.find();
 
 
     // Keep track of interviews that were pending
@@ -26,7 +28,8 @@ const scheduleInterviews = async () => {
         interviews,
         timeSlots,
         panels,
-        rooms
+        rooms,
+        companies
     );
 
 
