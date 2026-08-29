@@ -258,7 +258,7 @@ const generateSchedule = (
         )
         .sort((a, b) => {
             const companyA = companies.find(
-                (company) => company.companyId === a.companyId
+                (company) => company.companyId === a.companyId//store the entire company of a 
             );
 
             const companyB = companies.find(
@@ -267,8 +267,8 @@ const generateSchedule = (
 
             return (
                 (companyA?.priority ?? 999) -
-                (companyB?.priority ?? 999)
-            );
+                (companyB?.priority ?? 999)//the negative number will put a before b and vice versa, if companyA has higher priority (lower number), it will be scheduled first
+            );// 999 is the safety kit . if we are not able to find the company priority it gives that company the lowest priority
         });
     // Process one interview at a time
     for (const interview of pendingInterviews) {
